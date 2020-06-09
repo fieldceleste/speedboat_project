@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get '/signout' => 'sessions#destroy'
 
   get '/home', to: 'site#home'
+
+  resources :users
 end
