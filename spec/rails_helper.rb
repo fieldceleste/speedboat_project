@@ -1,5 +1,8 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'rspec/rails'
+require 'capybara/rails'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -62,11 +65,18 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  VCR.configure do |c|
-    c.cassette_library_dir = 'spec/cassettes'
-    c.hook_into :webmock
-    c.configure_rspec_metadata!
-    c.filter_sensitive_data('<api_key>') { ENV['API_KEY'] }
+end
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+  c.filter_sensitive_data('<api_key>') { ENV['API_KEY'] }
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
-  
 end

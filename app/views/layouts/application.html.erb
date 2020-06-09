@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SpeedboatProject</title>
+    <title>Speedboat</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,25 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <% if @current_user %>
+            <%= current_user.email %> | <%= link_to "Sign out", signout_path %>
+          <% else %>
+            <%= link_to "Sign up", signup_path %> | <%= link_to "Sign in", signin_path %>
+          <% end %>
+          <nav class="navbar navbar-light bg-light">
+            <%= flash[:alert] %>
+            <%= flash[:notice] %>
+            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="/reviews">Reviews</a>
+          </nav>
+          <%= yield %>  
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
   </body>
 </html>
